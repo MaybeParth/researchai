@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ResearchAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+</head>
+<body>
+  <div class="app" id="app">
+    <!-- Sidebar: every previous research session, like a chat history -->
+    <aside id="sidebar" class="sidebar" aria-label="Your research">
+      <div class="sidebar-top">
+        <a class="brand" href="/" aria-label="ResearchAI home">Research<span>AI</span><i aria-hidden="true"></i></a>
+        <button id="collapse" class="icon-btn" type="button" title="Hide sidebar" aria-label="Hide sidebar"></button>
+      </div>
+      <a id="new" class="btn primary block" href="/">New research</a>
+      <label class="search">
+        <span class="visually-hidden">Search your research</span>
+        <input id="search" type="search" placeholder="Search research" autocomplete="off">
+      </label>
+      <nav id="session-list" class="session-list" aria-label="Previous research"></nav>
+    </aside>
+    <div id="backdrop" class="backdrop" hidden></div>
+
+    <div class="workspace">
+      <header class="topbar">
+        <button id="open-sidebar" class="icon-btn" type="button" title="Show sidebar" aria-label="Show sidebar"></button>
+        <div class="topbar-right">
+          <button id="pause" class="btn ghost" type="button" hidden>Pause</button>
+        </div>
+      </header>
+
+  <main>
+    <!-- Start screen: shown when no session is open -->
+    <section id="start" class="start">
+      <p class="eyebrow">Personal research assistant</p>
+      <h1>Better research starts with the right question.</h1>
+      <p class="lede">Give it a topic. You choose the direction, it plans the research, checks its own evidence, follows up where it's weak, and hands you a cited report.</p>
+      <form id="start-form" class="start-form">
+        <label class="visually-hidden" for="topic">Research topic</label>
+        <input id="topic" name="topic" placeholder="e.g. Impact of the EU AI Act on European AI startups" autocomplete="off" required>
+        <button type="submit" class="btn primary large">Start research</button>
+      </form>
+      <ol id="start-steps" class="lifecycle static"></ol>
+    </section>
+
+    <!-- Session view -->
+    <section id="session" class="session" hidden>
+      <div class="hero">
+        <div class="hero-main">
+          <div id="status-row" class="status-row" role="status"></div>
+          <h1 id="title"></h1>
+          <div id="direction" class="direction"></div>
+        </div>
+        <dl id="stats" class="stats"></dl>
+      </div>
+
+      <div class="card lifecycle-card">
+        <div class="card-head">
+          <h2>The research lifecycle</h2>
+          <p id="now" class="muted"></p>
+        </div>
+        <ol id="lifecycle" class="lifecycle"></ol>
+      </div>
+
+      <div class="grid">
+        <div class="card main-card">
+          <nav class="tabs" role="tablist">
+            <button role="tab" data-tab="plan" aria-selected="true">Plan</button>
+            <button role="tab" data-tab="summary" aria-selected="false">Summary</button>
+            <button role="tab" data-tab="report" aria-selected="false">Full report</button>
+            <button role="tab" data-tab="sources" aria-selected="false">Sources <span id="src-count" class="count"></span></button>
+            <button role="tab" data-tab="log" aria-selected="false">Activity <span id="log-count" class="count"></span></button>
+          </nav>
+          <div id="tab-plan" class="tab"><p class="empty">The plan appears once you've chosen a direction.</p></div>
+          <div id="tab-summary" class="tab" hidden><p class="empty">A summary of the whole session appears here.</p></div>
+          <div id="tab-report" class="tab" hidden><p class="empty">The report appears here when it passes the citation and evidence checks.</p></div>
+          <div id="tab-sources" class="tab" hidden><p class="empty">No sources yet.</p></div>
+          <div id="tab-log" class="tab" hidden><ol id="log" class="log"></ol></div>
+        </div>
+
+        <aside class="side">
+          <div id="gaps" class="card side-card"></div>
+          <div id="ask" class="card side-card ask" hidden></div>
+          <div id="notes-card" class="card side-card">
+            <h3 class="side-title">What the agent is doing</h3>
+            <ol id="notes" class="notes"></ol>
+          </div>
+          <div id="next" class="card side-card tint" hidden></div>
+        </aside>
+      </div>
+    </section>
+  </main>
+    </div>
+  </div>
+
+  <div id="question"></div>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
